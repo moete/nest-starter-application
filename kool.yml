@@ -1,0 +1,14 @@
+# Here you can define shortcuts and aliases to common tasks (commands)
+# you will run in your local environment or CI or deploy.
+#  Use the scripts defined below with:
+#    $ kool run <script>
+# Learn more at: https://kool.dev/docs/getting-started/how-it-works#koolyml
+scripts:
+  # CLI access to PostgreSQL
+  psql: kool exec -e PGPASSWORD=$DB_PASSWORD database psql -U $DB_USERNAME $DB_DATABASE
+  nest: kool exec app nest
+  npm: kool exec app npm
+  npx: kool exec app npx
+  setup:
+    - kool docker kooldev/node:16 npm install
+    - kool start
