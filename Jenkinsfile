@@ -1,11 +1,13 @@
 pipeline {
   agent any
-    
-  stages {    
-    stage('Cloning Git') {
+ 
+  tools {nodejs "node"}
+ 
+  stages {
+    stage('Example') {
       steps {
-        git 'git@github.com:moete/nest-starter-application.git'
+        sh 'npm config ls'
       }
     }
-  }     
+  }
 }
