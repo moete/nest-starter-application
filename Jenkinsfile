@@ -1,13 +1,26 @@
 pipeline {
   agent any
- 
+    
   tools {nodejs "node"}
- 
+    
   stages {
-    stage('Example') {
+        
+    stage('Cloning Git') {
       steps {
-        sh 'npm config ls'
+		git branch: 'main', url: 'https://github.com/moete/nest-starter-application.git'      
+        }
+    }
+        
+    stage('Install dependencies') {
+      steps {
+       sh 'npm install'
       }
     }
+     
+    stage('Test') {
+      steps {
+         sh 'npm test'
+      }
+    }      
   }
 }
