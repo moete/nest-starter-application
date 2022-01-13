@@ -7,7 +7,7 @@ pipeline {
         
     stage('Cloning Git') {
       steps {
-		git branch: 'main', url: 'https://github.com/moete/nest-starter-application.git'      
+        git branch: 'main', url: 'https://github.com/moete/nest-starter-application.git'      
         }
     }
         
@@ -24,9 +24,9 @@ pipeline {
     }
   
    stage('SonarQube analysis') {
-   def scannerHome = tool 'SonarScanner 4.0';
+   def scannerHome = tool 'sonar_scanner';
         steps{
-        withSonarQubeEnv('sonarqube-8.9') { 
+        withSonarQubeEnv('sonar_scanner') { 
       sh "${scannerHome}/bin/sonar-scanner"
     }    
  }
