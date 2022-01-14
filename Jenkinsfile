@@ -10,11 +10,11 @@ pipeline {
             }
         }
 
-        stage('Install dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
+        // stage('Install dependencies') {
+        //     steps {
+        //         sh 'npm install'
+        //     }
+        // }
 
         stage('Test') {
             steps {
@@ -24,10 +24,12 @@ pipeline {
         stage('SonarQube analysis') {
             environment {
                 scannerHome = tool 'SonarQubeScanner'
+                organization = ''
+                project_name = ''
             }
             steps {
                 withSonarQubeEnv(installationName : 'SonarCloudOne' , credentialsId:'sonarqube-token') { // If you have configured more than one global server connection, you can specify its name
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=gearni-app-key -Dsonar.sources=. "
                 }
             }
         }
