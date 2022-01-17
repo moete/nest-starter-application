@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+        registry = 'taz98/gearni'
+        registryCredential = 'taz98'
+        dockerImage = ''
+    }
     agent any
 
     tools { nodejs 'node' }
@@ -10,11 +15,11 @@ pipeline {
             }
         }
 
-        // stage('Install dependencies') {
-        //     steps {
-        //         sh 'npm install'
-        //     }
-        // }
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
 
         stage('Test') {
             steps {
@@ -31,6 +36,28 @@ pipeline {
                 withSonarQubeEnv(installationName : 'SonarCloudOne' , credentialsId:'sonarqube-token') { // If you have configured more than one global server connection, you can specify its name
                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=gearni-app-key -Dsonar.sources=. "
                 }
+            }
+        }
+
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy our image') {
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+        stage('Cleaning up') {
+            steps {
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }

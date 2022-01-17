@@ -9,4 +9,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 8090 
-CMD [ "node", "main.js" ]
+CMD [ "node", "main.ts" ]
