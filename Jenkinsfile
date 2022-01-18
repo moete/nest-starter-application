@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = 'taz98/gearni'
-        registryCredential = 'taz98'
+        registryCredential = 'dockerHub'
         dockerImage = ''
     }
     agent any
