@@ -34,7 +34,7 @@ pipeline {
             }
             steps { 
                 withSonarQubeEnv(installationName : 'SonarCloudOne' ,credentialsId:'sonarqube-tk' ) { // If you have configured more than one global server connection, you can specify its name
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=gearni-app -Dsonar.sources=. "
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=gearni-app-key -Dsonar.sources=. -Dsonar.host.url=http://137.184.45.234:9000 -Dsonar.login=d562813b312a9d57179e7ade93a94793395baae0 "
                 }
             }
         }
